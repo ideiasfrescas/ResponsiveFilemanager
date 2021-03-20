@@ -293,8 +293,9 @@ $config = array(
     'image_resizing_mode'                     => 'auto', // same as $image_max_mode
     'image_resizing_override'                 => false,
     // If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
-    // bigger than $image_max_width or height then it will be converted to those values
-
+    // bigger than $image_max_width or height then it will be converted to those values    
+    'image_strip'                             =>  true,
+    //forces automatic striping of EXIF metadata. Automatic usage of imagick and fallback with gd may incurr in some loss of quality
 
     //******************
     //
