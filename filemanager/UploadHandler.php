@@ -1493,6 +1493,21 @@ class UploadHandler
 
         if ($is_img)
         {
+            //before any processing may occur, check if image_strip is true then strip exif metadata
+            if(isset($this->options['config']['strip_image']) && $this->options['config']['strip_image']) {
+                if (extension_loaded('imagick')) {
+                    $img = new Imagick(realpath($targetFile));
+                    $profiles = $img->getImageProfiles("icc", true);
+                    $img->stripImage();
+                    if(!empty($profiles)) {
+                        $img->profileImage("icc", $profiles['icc']);
+                    }
+                    $img->writeImage($targetFile);
+                    $img->clear();
+                    $img->destroy();
+                    unset($profiles);
+                }                
+            }
             if(isset($this->options['config']['image_watermark']) && $this->options['config']['image_watermark']){
                 require_once('include/php_image_magician.php');
 
